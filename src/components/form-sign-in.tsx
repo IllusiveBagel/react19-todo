@@ -1,14 +1,30 @@
 import { signInWithEmail } from "@/lib/supabase/auth/sign-in-email";
-import { useState } from "react";
+import { AuthOtpResponse } from "@supabase/supabase-js";
+import { useEffect, useState } from "react";
 
 const SignInForm = () => {
   const [email, setEmail] = useState<string>("");
+  const [signInResult, setSignInResult] = useState<AuthOtpResponse | null>(
+    null
+  );
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    if (email === "") return alert("Email is required");
     const result = await signInWithEmail(email);
-    console.log(JSON.stringify(result, null, 2));
+    setSignInResult(result);
   };
+
+  useEffect(() => {
+    if (signInResult) {
+      if ("error" in signInResult && signInResult.error) {
+        alert(signInResult.error.message);
+        return;
+      }
+      window.location.href = "/";
+      alert("Check your email for the OTP");
+    }
+  }, [signInResult]);
 
   return (
     <form onSubmit={handleSubmit}>
