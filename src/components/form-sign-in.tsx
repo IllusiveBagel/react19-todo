@@ -21,16 +21,23 @@ const SignInForm = () => {
         alert(signInResult.error.message);
         return;
       }
-      window.location.href = "/";
       alert("Check your email for the OTP");
     }
   }, [signInResult]);
 
   return (
     <form onSubmit={handleSubmit}>
-      <label>
-        Email
+      <label
+        style={{
+          marginBottom: "0.5rem",
+        }}
+      >
+        Email:
         <input
+          style={{
+            display: "inline",
+            marginInline: "0.5rem",
+          }}
           type="email"
           name="email"
           value={email}

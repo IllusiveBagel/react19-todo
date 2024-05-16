@@ -25,7 +25,6 @@ const Home = () => {
 
     if (access_token) {
       const type = hashParams.get("type");
-      console.log("access_token", access_token);
       window.history.replaceState({}, document.title, "/");
       verifyOTP(access_token, type as EmailOtpType);
     }
